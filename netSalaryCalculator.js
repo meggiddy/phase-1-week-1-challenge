@@ -9,14 +9,16 @@ const calculatePayee = (salary)=>{
     if(salary > 32333){
         return (salary*0.3);
     }
+    //payee calculator ignores the other payee deductions e.g Personal Relief, Affordable Housing e.t.c.
 }
 const calculateNhif = (salary)=>{
     for(let i = 0; i<=rates.length; i++){
         const currentRate = rates[i];
         if(salary>=currentRate.from && salary<=currentRate.to){
+            //from is the bottom of range and to is the top of the range
             return currentRate.deduction;
         }
-    }
+    }//uses the rates Object array below to iterate and find the deduction indicated for the salary bracket 
 }
 const calculateNssf = (salary)=>{
     //Source: https://www.tuko.co.ke/283255-nssf-rates-kenya-new-monthly-contributions-interest-2021.html#:~:text=NSSF%20contribution%20rates%20comprise%20a,entire%20pensionable%20salaries%20and%20wages.&text=NSSF%20monthly%20rates%20are%20divided,employee%20pays%20the%20remaining%206%25.
@@ -27,13 +29,14 @@ const calculateNetSalary = (salary)=>{
     return (salary-calculatePayee(salary)-calculateNhif(salary)-calculateNssf(salary))
 }
 const netSalaryCalculator = (salary)=> {
-    
+    //provides a breakdown when the function is run i.e Payee=xxx, nhif=xxx e.t.c.
     let payee = calculatePayee(salary)
     let nhif = calculateNhif(salary);
     let nssf = calculateNssf(salary);
     let netSalary = calculateNetSalary(salary);
     console.log({payee,nhif,nssf,netSalary})
 }
+//Object array used in nhif calculator
 const rates = [{
     from: 0,
     to: 5999,
@@ -103,4 +106,5 @@ const rates = [{
     to: Number.MAX_SAFE_INTEGER,//There is no highest value indicated
     deduction: 1700,
 }]
+//sample test code
 netSalaryCalculator(56784);

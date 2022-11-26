@@ -1,12 +1,12 @@
 const speedDetector = (speed)=>{
-    const speedLimit = 70;
+    const speedLimit = 70;//indicated speedlimit
     if(speed < speedLimit){
         console.log("Ok");
-        return;
+        return;//if on or below speedlimit this function aborts here
     }
     
-    const overLimit = (speed - speedLimit);
-    const demeritPoints= Math.round((overLimit/5));
+    const overLimit = (speed - speedLimit);//calculates the speed over speedlimit
+    const demeritPoints= Math.round((overLimit/5));//every 5km above speedlimit is one demerit point 
 
     if(demeritPoints>=12){
         console.log("License suspended");
@@ -15,7 +15,7 @@ const speedDetector = (speed)=>{
     console.log(`Points:${demeritPoints}`)
 
 }
-
+//sample test code
 speedDetector(100);
 speedDetector(68);
 speedDetector(136);
