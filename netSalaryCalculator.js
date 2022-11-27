@@ -1,13 +1,13 @@
 
 const calculatePayee = (salary)=>{
     if(salary<=24000){
-        return (salary*0.1);
+        return Math.floor(salary*0.1);
     }
     if(salary >= 24001 && salary <= 32333){
-        return (salary*0.25);
+        return Math.floor(salary*0.25);
     }
     if(salary > 32333){
-        return (salary*0.3);
+        return Math.floor(salary*0.3);
     }
     //payee calculator ignores the other payee deductions e.g Personal Relief, Affordable Housing e.t.c.
 }
@@ -20,11 +20,24 @@ const calculateNhif = (salary)=>{
         }
     }//uses the rates Object array below to iterate and find the deduction indicated for the salary bracket 
 }
+
 const calculateNssf = (salary)=>{
     //Source: https://www.tuko.co.ke/283255-nssf-rates-kenya-new-monthly-contributions-interest-2021.html#:~:text=NSSF%20contribution%20rates%20comprise%20a,entire%20pensionable%20salaries%20and%20wages.&text=NSSF%20monthly%20rates%20are%20divided,employee%20pays%20the%20remaining%206%25.
-    // Tier 1 720
-    //Tier 2 1440
+    const nssfRates= {
+        tierRate: 0.06,//Rate is 6%
+        tier1Limit: 6000,
+        tier2Limit: 18000,
+    }
+    if(salary <= nssfRates.tier1Limit){
+        return (salary*nssfRates.tierRate);
+    } else if (salary > nssfRates.tier1Limit){
+        let deduction = ((nssfRates.tier2Limit - nssfRates.tier1Limit)*nssfRates.tierRate);
+        let deduction1 = salary > nssfRates.tier1Limit ? nssfRates.tier1Limit : salary;//accounts for the amount of salary above tier 1 and the percentage charged
+        let deduction2 = deduction1 * (nssfRates.tierRate);
+        return deduction+deduction2;
+    }
 }
+    
 const calculateNetSalary = (salary)=>{
     return (salary-calculatePayee(salary)-calculateNhif(salary)-calculateNssf(salary))
 }
@@ -108,3 +121,6 @@ const rates = [{
 }]
 //sample test code
 netSalaryCalculator(56784);
+netSalaryCalculator(709924);
+netSalaryCalculator(5000);
+netSalaryCalculator(17000);
