@@ -19,8 +19,7 @@ The Challenge had 3 questions:
 ## Technologies
 ***
 A list of technologies used within the project:
-* HTML
-* CSS
+
 * JavaScript
 
 ## Installation
